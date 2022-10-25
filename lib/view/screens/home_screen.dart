@@ -3,6 +3,8 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:mvc_design/model/app_constant.dart';
 import 'package:mvc_design/model/categories.dart';
+import 'package:mvc_design/view/screens/laptop_screen.dart';
+import 'package:mvc_design/view/screens/watch_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -167,19 +169,29 @@ class HomeScreen extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 26),
-                  child: Container(
-                    width: 155,
-                    height: 165,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        image: DecorationImage(
-                            image: AssetImage('asset/Watch.png')),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(24)),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 32, top: 140),
-                      child: Text(
-                        'Smart Watch',
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => WatchScreen(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: 155,
+                      height: 165,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          image: DecorationImage(
+                              image: AssetImage('asset/Watch.png')),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(24)),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 32, top: 140),
+                        child: Text(
+                          'Smart Watch',
+                        ),
                       ),
                     ),
                   ),
@@ -189,19 +201,29 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 26),
-                  child: Container(
-                    width: 155,
-                    height: 165,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        image: DecorationImage(
-                            image: AssetImage('asset/laptop.jpg')),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(24)),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 58, top: 140),
-                      child: Text(
-                        'Laptop',
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LaptopScreen(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: 155,
+                      height: 165,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          image: DecorationImage(
+                              image: AssetImage('asset/laptop.jpg')),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(24)),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 58, top: 140),
+                        child: Text(
+                          'Laptop',
+                        ),
                       ),
                     ),
                   ),
