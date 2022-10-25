@@ -27,9 +27,9 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
     return Scaffold(
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        unselectedLabelStyle: TextStyle(color: Colors.blue),
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.grey[400],
+        unselectedLabelStyle: TextStyle(color: Colors.black),
         showUnselectedLabels: true,
         currentIndex: _selectedIndex,
         onTap: onItemTBottomNavigationPageed,
@@ -39,11 +39,11 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark),
+            icon: Icon(Icons.send),
             label: 'Transaction',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
+            icon: Icon(Icons.mail_outline_outlined),
             label: 'Mail',
           ),
           BottomNavigationBarItem(
