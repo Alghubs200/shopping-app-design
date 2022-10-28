@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -197,46 +199,66 @@ class _LaptopScreenState extends State<LaptopScreen> {
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
-                                    crossAxisSpacing: 0.5,
+                                    crossAxisSpacing: 0.0,
                                     mainAxisSpacing: 30,
-                                    childAspectRatio: 0.9),
+                                    childAspectRatio: 0.6),
                             itemBuilder: (BuildContext, index) {
                               return Padding(
                                 padding:
-                                    const EdgeInsets.only(left: 26, right: 28),
+                                    const EdgeInsets.only(left: 10, right: 10),
                                 child: Container(
-                                  height: 220,
-                                  width: 170,
-                                  color: Colors.red,
+                                  height: 270,
+                                  width: 205,
+                                  color: Colors.white,
                                   child: Stack(
                                     children: [
                                       Container(
-                                        width: 155,
-                                        height: 250,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 18),
+                                              child: Text(product![index]
+                                                  .title
+                                                  .toString()),
+                                            ),
+                                          ],
+                                        ),
+                                        width: 184,
+                                        height: 310,
                                         decoration: BoxDecoration(
                                             border:
                                                 Border.all(color: Colors.grey),
-                                            image: DecorationImage(
-                                              image: NetworkImage(
-                                                product![index]
-                                                    .image
-                                                    .toString(),
-                                              ),
-                                            ),
                                             color: Colors.white,
                                             borderRadius:
                                                 BorderRadius.circular(24)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 18, top: 148),
-                                          child: Text(
-                                            product![index].title.toString(),
-                                          ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: sqrt1_2, top: sqrt1_2),
+                                        child: Container(
+                                          width: 182,
+                                          height: 194,
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  scale: 1,
+                                                  image: NetworkImage(
+                                                    product![index]
+                                                        .image
+                                                        .toString(),
+                                                  )),
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(24)),
                                         ),
                                       ),
                                       Positioned(
-                                        top: 168,
-                                        left: 48,
+                                        top: 290,
+                                        left: 62,
                                         child: Container(
                                           child: Center(
                                               child: Text(
