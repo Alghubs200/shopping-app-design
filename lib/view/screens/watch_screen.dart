@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:mvc_design/model/product.dart';
 import 'package:mvc_design/view/screens/home_screen.dart';
+import 'package:http/http.dart' as http;
+import 'package:mvc_design/model/product.dart';
 
-class WatchScreen extends StatelessWidget {
+class WatchScreen extends StatefulWidget {
   const WatchScreen({super.key});
 
+  @override
+  State<WatchScreen> createState() => _WatchScreenState();
+}
+
+class _WatchScreenState extends State<WatchScreen> {
   @override
   Widget build(BuildContext context) {
     var watchcontroller = TextEditingController();
@@ -71,7 +79,8 @@ class WatchScreen extends StatelessWidget {
                       Container(
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: AssetImage('asset/best_laptops.PNG'),
+                                image:
+                                    AssetImage('asset/watch_collections.jpg'),
                                 fit: BoxFit.cover),
                             color: Colors.yellow,
                             borderRadius: BorderRadius.circular(24)),
@@ -81,17 +90,21 @@ class WatchScreen extends StatelessWidget {
                       Positioned(
                           left: 77,
                           child: Text(
-                            'Best Laptops',
+                            'Best Watches',
                             style: TextStyle(
-                                fontSize: 17, fontWeight: FontWeight.bold),
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
                           )),
                       Positioned(
-                          left: 99,
+                          left: 105,
                           top: 20,
                           child: Text(
                             'in 2022',
                             style: TextStyle(
-                                fontSize: 11, fontWeight: FontWeight.bold),
+                                fontSize: 11,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
                           )),
                     ],
                   ),

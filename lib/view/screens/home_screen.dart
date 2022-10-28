@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:mvc_design/model/app_constant.dart';
 import 'package:mvc_design/model/categories.dart';
+import 'package:mvc_design/model/product.dart';
 import 'package:mvc_design/view/screens/laptop_screen.dart';
 import 'package:mvc_design/view/screens/watch_screen.dart';
 
@@ -12,6 +13,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final listCategory = ListCategory.getListCategory();
+    final products = HomeProduct.getHomeProducts();
     var searchcontroller = TextEditingController();
     return SafeArea(
         child: Scaffold(
@@ -140,11 +142,12 @@ class HomeScreen extends StatelessWidget {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 12),
+              padding: const EdgeInsets.only(left: 12, right: 12),
               child: Container(
                 height: 55,
                 color: Colors.white,
                 child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     itemCount: listCategory.length,
                     itemBuilder: (context, index) {
@@ -165,119 +168,46 @@ class HomeScreen extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 26),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => WatchScreen(),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      width: 155,
-                      height: 165,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          image: DecorationImage(
-                              image: AssetImage('asset/Watch.png')),
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(24)),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 32, top: 140),
-                        child: Text(
-                          'Smart Watch',
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 25,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 26),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LaptopScreen(),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      width: 155,
-                      height: 165,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          image: DecorationImage(
-                              image: AssetImage('asset/laptop.jpg')),
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(24)),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 58, top: 140),
-                        child: Text(
-                          'Laptop',
+            GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 4,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 0.5,
+                    mainAxisSpacing: 30,
+                    childAspectRatio: 0.9),
+                itemBuilder: (BuildContext, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 26, right: 26),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LaptopScreen(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: 155,
+                        height: 144,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            image: DecorationImage(
+                                image: AssetImage(products[index].image)),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(24)),
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [Text(products[index].name)]),
                         ),
                       ),
                     ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 24,
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 26),
-                  child: Container(
-                    width: 155,
-                    height: 165,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        image: DecorationImage(
-                            image: AssetImage('asset/gmaing_laptop.jpg')),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(24)),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 32, top: 140),
-                      child: Text(
-                        'Gaming Laptop',
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 25,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 26),
-                  child: Container(
-                    width: 155,
-                    height: 165,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        image: DecorationImage(
-                            image: AssetImage('asset/headphone.jpg')),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(24)),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 42, top: 140),
-                      child: Text(
-                        'Headphone',
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            )
+                  );
+                })
           ],
           crossAxisAlignment: CrossAxisAlignment.start,
         ),
