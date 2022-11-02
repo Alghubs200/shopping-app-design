@@ -38,6 +38,8 @@ class ProductModel {
         rating: Rating.fromJson(json["rating"]),
       );
 
+  get email => null;
+
   Map<String, dynamic> toJson() => {
         "id": id,
         "title": title,

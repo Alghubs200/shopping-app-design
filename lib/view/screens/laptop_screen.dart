@@ -8,6 +8,7 @@ import 'package:mvc_design/model/products_model.dart';
 import 'package:mvc_design/view/screens/home_screen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:async';
 
 class LaptopScreen extends StatefulWidget {
   const LaptopScreen({super.key});
@@ -17,18 +18,35 @@ class LaptopScreen extends StatefulWidget {
 }
 
 class _LaptopScreenState extends State<LaptopScreen> {
-  List<ProductModel>? product;
+  late TextEditingController laptopcontroller;
+
+  List<ProductModel>? tempProducts = [];
+  List<ProductModel>? product = [];
+  List<ProductModel>? getFilteredProducts(String query) {
+    if (query.isEmpty) {
+      return tempProducts;
+    }
+    final filteredProducts = product
+        ?.where((element) =>
+            element.title!.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+    return filteredProducts;
+  }
+
   var isLoaded = false;
 
   @override
   void initState() {
+    laptopcontroller = TextEditingController();
     super.initState();
+
     getData();
   }
 
   getData() async {
     product = await RemoteService().getProductModel();
     if (product != null) {
+      tempProducts = product;
       setState(() {
         isLoaded = true;
       });
@@ -36,8 +54,13 @@ class _LaptopScreenState extends State<LaptopScreen> {
   }
 
   @override
+  void dispose() {
+    laptopcontroller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var laptopcontroller = TextEditingController();
     return SafeArea(
         child: Scaffold(
             body: SingleChildScrollView(
@@ -72,13 +95,28 @@ class _LaptopScreenState extends State<LaptopScreen> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 24),
                               child: TextField(
+                                  onTap: () {},
+                                  onChanged: (value) {
+                                    final newProducts =
+                                        getFilteredProducts(value);
+                                    setState(() {
+                                      product = newProducts;
+                                    });
+                                  },
+                                  onSubmitted: (value) {
+                                    final newProducts =
+                                        getFilteredProducts(value);
+                                    setState(() {
+                                      product = newProducts;
+                                    });
+                                  },
                                   controller: laptopcontroller,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                         borderRadius:
                                             BorderRadius.circular(24)),
                                     hintText: 'Search On Laptop',
-                                    prefixIcon: Icon(
+                                    prefixIcon: const Icon(
                                       Icons.search,
                                       color: Colors.grey,
                                     ),
@@ -90,7 +128,27 @@ class _LaptopScreenState extends State<LaptopScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: product?.length,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          final products = product?[index];
+
+                          return Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: product!.isNotEmpty
+                                  ? ListTile(
+                                      title: Text(
+                                          product![index].title.toString()),
+                                      leading: CircleAvatar(
+                                        backgroundImage: NetworkImage(
+                                            product![index].image.toString()),
+                                      ))
+                                  : const Text('No data'));
+                        },
+                      ),
+                      const SizedBox(
                         height: 20,
                       ),
                       Padding(
@@ -101,7 +159,7 @@ class _LaptopScreenState extends State<LaptopScreen> {
                               children: [
                                 Container(
                                   decoration: BoxDecoration(
-                                      image: DecorationImage(
+                                      image: const DecorationImage(
                                           image: AssetImage(
                                               'asset/best_laptops.PNG'),
                                           fit: BoxFit.cover),
@@ -110,7 +168,7 @@ class _LaptopScreenState extends State<LaptopScreen> {
                                   height: 155,
                                   width: 250,
                                 ),
-                                Positioned(
+                                const Positioned(
                                     left: 77,
                                     child: Text(
                                       'Best Laptops',
@@ -118,7 +176,7 @@ class _LaptopScreenState extends State<LaptopScreen> {
                                           fontSize: 17,
                                           fontWeight: FontWeight.bold),
                                     )),
-                                Positioned(
+                                const Positioned(
                                     left: 99,
                                     top: 20,
                                     child: Text(
@@ -129,7 +187,7 @@ class _LaptopScreenState extends State<LaptopScreen> {
                                     )),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 40,
                             ),
                             Stack(
@@ -159,7 +217,7 @@ class _LaptopScreenState extends State<LaptopScreen> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Padding(
@@ -167,11 +225,11 @@ class _LaptopScreenState extends State<LaptopScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               'Featured',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
-                            Expanded(
+                            const Expanded(
                               child: SizedBox(
                                 width: 10,
                               ),
